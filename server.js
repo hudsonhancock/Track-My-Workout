@@ -24,6 +24,9 @@ app.get("/stats", (req, res) => {
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness", {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const server = app.listen(PORT, () => {
