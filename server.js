@@ -66,21 +66,22 @@ app.post("/api/workouts", (req, res) => {
     });
 });
 
-app.put("/workouts/:id", (req, res) => {
-  const id = req.params.id;
-  const body = req.body;
-
-  db.Workout.findOneAndUpdate({ _id: id }, { $push: { exercises: body } })
-    .then((data) => {
-      console.log(data);
-      res.json(data);
+app.put("/api/workouts/:id", (req, res) => {
+  db.Workout.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { exercises: req.body } }
+  )
+    .then((dbWorkout) => {
+      console.log(dbWorkout);
+      res.json(dbWorkout);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.json(err);
+      console.log("error");
     });
-});
+}); //this is the update route
 
-app.put("/workouts/:id", (req, res) => {
+app.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
 
@@ -97,7 +98,7 @@ app.put("/workouts/:id", (req, res) => {
     });
 });
 
-app.get("/workouts/range", (req, res) => {
+app.get("/api/workouts/range", (req, res) => {
   db.Workout.find({})
     .sort({ date: -1 })
     .then((data) => {
