@@ -18,7 +18,15 @@ const UserSchema = new Schema({
       reps: Number,
       sets: Number,
     },
+    {
+      toObject: { virtuals: true },
+      toJSON: { virtuals: true },
+    },
   ],
+});
+
+UserSchema.virtual("excercise.date").get(function () {
+  return this.day.toDateString();
 });
 
 const User = mongoose.model("User", UserSchema);
