@@ -43,7 +43,7 @@ app.post("/api/workouts", (req, res) => {
     .catch((err) => {
       res.status(400).json(err);
     });
-});
+}); //this is the post route for the workout
 
 app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
@@ -54,7 +54,7 @@ app.get("/api/workouts", (req, res) => {
     .catch((err) => {
       res.json(err);
     });
-});
+}); //this is the get route for the workout
 
 app.post("/api/workouts", (req, res) => {
   db.Workout.create({})
@@ -66,7 +66,7 @@ app.post("/api/workouts", (req, res) => {
       res.json(err);
       console.log("error");
     });
-});
+}); //this is the post route for the workout
 
 app.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
