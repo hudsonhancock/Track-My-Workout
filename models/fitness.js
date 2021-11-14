@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     required: "First Name is Required",
   },
 
-  excercise: [
+  exercises: [
     {
       type: String,
       name: String,

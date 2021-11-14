@@ -36,21 +36,23 @@ app.put("/api/workouts/:id", (req, res) => {
 });
 
 app.post("/api/workouts", (req, res) => {
-  db.Workout.create({}).then(function (response) {
-    console.log(response);
-    res.json(response);
-  });
+  db.Workout.create({})
+    .then((newWorkout) => {
+      res.json(newWorkout);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 });
 
-app.get("/api/workouts/range", (req, res) => {
+app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
-    .then((dbWorkout) => {
-      console.log(dbWorkout);
-      res.json(dbWorkout);
+    .then((workout) => {
+      console.log(workout);
+      res.json(workout);
     })
     .catch((err) => {
       res.json(err);
-      console.log("error");
     });
 });
 
@@ -67,19 +69,18 @@ app.post("/api/workouts", (req, res) => {
 });
 
 app.put("/api/workouts/:id", (req, res) => {
-  db.Workout.findByIdAndUpdate(
-    { _id: req.params.id },
-    { $push: { exercises: req.body } }
-  )
-    .then((dbWorkout) => {
-      console.log(dbWorkout);
-      res.json(dbWorkout);
+  const id = req.params.id;
+  const body = req.body;
+
+  db.Workout.findOneAndUpdate({ _id: id }, { $push: { exercises: body } })
+    .then((data) => {
+      console.log(data);
+      res.json(data);
     })
     .catch((err) => {
-      res.json(err);
-      console.log("error");
+      res.status(400).json(err);
     });
-}); //this is the update route
+});
 
 app.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
