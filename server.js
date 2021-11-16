@@ -31,10 +31,6 @@ app.get("/stats", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/stats.html"));
 }); //this is the stats page
 
-app.put("/api/workouts/:id", (req, res) => {
-  console.log(req.body);
-});
-
 app.post("/api/workouts", (req, res) => {
   db.Workout.create({})
     .then((newWorkout) => {
@@ -71,37 +67,22 @@ app.post("/api/workouts", (req, res) => {
 app.put("/api/workouts/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
-
-  db.Workout.findOneAndUpdate({ _id: id }, { $push: { exercises: body } })
-    .then((data) => {
-      console.log(data);
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
-
-app.put("/api/workouts/:id", (req, res) => {
-  const id = req.params.id;
-  const body = req.body;
-
-  db.Workout.findOneAndUpdate(
-    { _id: id },
-    { $push: { exercises: body } },
-    { new: true, runValidators: true }
-  )
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
+  body.exerciseType = req.body.type;
+  console.log(id);
+  console.log(body.exerciseType);
+  db.Workout.find({ _id: id }).then(function () {
+    console.log("test");
+    db.Workout.update({ _id: id }, { $push: { exercises: body } }).then(
+      function (response) {
+        res.json(response);
+      }
+    );
+  });
+}); //this is the put route for the workout
 
 app.get("/api/workouts/range", (req, res) => {
   db.Workout.find({})
-    .sort({ date: -1 })
+    .sort({ day: -1 })
     .then((data) => {
       res.json(data);
     })

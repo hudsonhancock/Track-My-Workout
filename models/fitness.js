@@ -11,8 +11,9 @@ const UserSchema = new Schema({
 
   exercises: [
     {
-      type: String,
+      exerciseType: String,
       name: String,
+      distance: Number,
       duration: Number,
       weight: Number,
       reps: Number,
