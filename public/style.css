@@ -51,6 +51,11 @@ header {
   font-size: 1.5rem;
 }
 
+#main_widget{
+  display: flex !important;
+  justify-content: center;
+}
+
 select {
   display: block;
   -moz-appearance: none;
